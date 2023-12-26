@@ -1,0 +1,8 @@
+django
+djangorestframework
+markdown
+django-filter
+drf-yasg
+django-environ
+psycopg2-binary
+pypdf
