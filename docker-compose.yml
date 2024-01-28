@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  app:
+   build: .
+   volumes:
+    - .:/django
+   ports:
+    - 8002:8000
+   image: application:django
+   container_name: core4
+   extra_hosts:
+    - "host.docker.internal:host-gateway"
+   command: gunicorn resumeWorld.wsgi:application --bind 0.0.0.0:8000 
+
+    

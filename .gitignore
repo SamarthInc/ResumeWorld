@@ -1,6 +1,7 @@
 *.pyc
 __pycache__
 db.sqlite3
-/env
+/newenvi
 *.env
 .vscode
+.DS_Store
