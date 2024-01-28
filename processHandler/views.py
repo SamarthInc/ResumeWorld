@@ -7,5 +7,8 @@ def getProcess(id):
     serializer = ProcessSerializer(process, many=False)
     return serializer.data
 
+def getProcessDto(id):
+    return Process.objects.get(id=id)
+
 def saveProcess(resumeText : str, jdText : str):
     return Process.objects.create(resumeText = resumeText, jdText= jdText ,uploadedDateTime = datetime.datetime.utcnow())
