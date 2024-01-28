@@ -6,3 +6,5 @@ drf-yasg
 django-environ
 psycopg2-binary
 pypdf
+regex
+gunicorn==21.2.0

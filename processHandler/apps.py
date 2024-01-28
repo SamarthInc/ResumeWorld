@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ResumehandlerConfig(AppConfig):
+class ProcessHandlerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'resumehandler'
+    name = 'processHandler'

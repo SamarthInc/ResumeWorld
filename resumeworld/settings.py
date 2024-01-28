@@ -44,10 +44,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'root',
-    'resumehandler',
-    'jdhandler',
     'environ',
-    'pypdf'
+    'pypdf',
+    'processHandler'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
+MIGRATION_MODULES = {
+    'root': None,
+}
+
