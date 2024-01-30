@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
+from processHandler.utilities.ReadDoc import readDoc
 from processHandler.views import getProcess, saveProcess
 from .uploadSerializer import UploadSerializer
     
@@ -15,11 +16,16 @@ class UploadViewSet(ViewSet):
     def saveProcess(self, request):
         fileUploaded = request.FILES['resume']
         content_type = fileUploaded.content_type
-        if(content_type != "application/pdf"):
-         response = "POST API and you have uploaded a {} file".format(content_type)
-         return Response(response)
-        else:
-            data =readPdf(fileUploaded)
+        checkfile = fileUploaded.name.split(".")
+        print(checkfile)
+        if str(checkfile[1]) == "docx" or str(checkfile[1]) == "pdf":
+            if str(checkfile[1]) == "pdf":
+                data =readPdf(fileUploaded)
+            if str(checkfile[1]) == "docx":
+                data =readDoc(fileUploaded)
             jobDescription = request.data['jobDescription']
             process = saveProcess(data, jobDescription)
-            return Response(process.id)   
+            return Response(process.id)     
+        else:
+            response = "POST API and you have uploaded a {} file".format(content_type)
+            return Response(response)

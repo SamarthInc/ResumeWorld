@@ -8,3 +8,5 @@ psycopg2-binary
 pypdf
 regex
 gunicorn==21.2.0
+pdfplumber
+python-docx
