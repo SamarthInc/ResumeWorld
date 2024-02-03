@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': "resumeworld",
         'USER': "samarth",
         'PASSWORD': "SamarthResume2024",
-        'HOST': "resume-world.cd86q46e4t23.us-east-2.rds.amazonaws.com",
+        'HOST': "localhost",
         'PORT': "5432",
     }
 }
