@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'root',
     'environ',
     'pypdf',
-    'processHandler'
+    'processHandler',
+    'reportExtractor'
 ]
 
 MIDDLEWARE = [
@@ -151,5 +152,6 @@ REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoS
 
 MIGRATION_MODULES = {
     'root': None,
+    'reportExtractor' : None
 }
 

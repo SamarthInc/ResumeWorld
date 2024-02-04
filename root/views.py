@@ -3,6 +3,7 @@ from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
 from processHandler.utilities.ReadDoc import readDoc
 from processHandler.views import getProcess, saveProcess
+from reportExtractor.views import scoreData
 from .uploadSerializer import UploadSerializer
     
 # ViewSets define the view behavior.
@@ -29,3 +30,7 @@ class UploadViewSet(ViewSet):
         else:
             response = "POST API and you have uploaded a {} file".format(content_type)
             return Response(response)
+        
+    def getReport(self,request):
+        processId = request.query_params.get('processId')
+        return Response(scoreData(processId))   

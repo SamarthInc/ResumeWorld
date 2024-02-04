@@ -4,6 +4,7 @@ from .views import UploadViewSet
 
 urlpatterns = [
     path('getProcess', UploadViewSet.as_view({'get': 'getProcess'})),
-    path('saveProcess', UploadViewSet.as_view({'post': 'saveProcess'}))
+    path('saveProcess', UploadViewSet.as_view({'post': 'saveProcess'})),
+    path('getReport', UploadViewSet.as_view({'get': 'getReport'}))
 ]
 
