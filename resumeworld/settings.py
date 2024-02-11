@@ -155,3 +155,5 @@ MIGRATION_MODULES = {
     'reportExtractor' : None
 }
 
+CORS_ORIGIN_ALLOW_ALL = True   
+
