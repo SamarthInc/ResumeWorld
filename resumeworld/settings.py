@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     'environ',
     'pypdf',
     'processHandler',
-    'reportExtractor'
+    'reportExtractor',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -155,5 +157,30 @@ MIGRATION_MODULES = {
     'reportExtractor' : None
 }
 
-CORS_ORIGIN_ALLOW_ALL = True   
+CORS_ALLOWED_ORIGINS = [
+"https://domain.com",
+"https://api.domain.com",
+"http://localhost:3000",
+"http://127.0.0.1:3000"
+]
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+] 
 
+#resume-world.cd86q46e4t23.us-east-2.rds.amazonaws.com
