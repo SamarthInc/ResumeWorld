@@ -11,3 +11,4 @@ gunicorn==21.2.0
 pdfplumber
 python-docx
 django-cors-headers
+djangorestframework-simplejwt
