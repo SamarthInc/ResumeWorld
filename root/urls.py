@@ -12,6 +12,8 @@ urlpatterns = [
     path('saveJobDescription', UploadViewSet.as_view({'post': 'saveJobDescription'})),
     path('saveResume', UploadViewSet.as_view({'post': 'saveResume'})),
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
+    path('deleteJobDescription', UploadViewSet.as_view({'delete': 'deleteJobDescription'})),
+    path('deleteResume', UploadViewSet.as_view({'delete': 'deleteResume'})),
     path('auth/',include('users.urls')),
 ]
 

@@ -1,15 +1,19 @@
-from reportExtractor.models import Score, ScoreConfig
+from reportExtractor.models import DefaultScoreConfig, Score, ScoreConfig
 from reportExtractor.serializer import ScoreSerializer, ScoreConfigSerializer
 import datetime
 
-def scoreConfigDataDto(id):
-    scoreConfig = ScoreConfig.objects.get(id=id)
+def scoreConfigDataDto(jobId):
+    scoreConfig = ScoreConfig.objects.get(jobId=jobId)
     return scoreConfig
     
-def scoreConfigData(id):
-    scoreConfig = scoreConfigDataDto(id)
+def scoreConfigData(jobId):
+    scoreConfig = scoreConfigDataDto(jobId)
     serializer = ScoreConfigSerializer(scoreConfig, many=False)
     return serializer.data
+
+def defaultScoreConfigDataDto(id):
+    defaultScoreConfig = DefaultScoreConfig.objects.get(id=id)
+    return defaultScoreConfig
 
 def scoreData(id):
     all_scores = Score.objects.get(id=id)
@@ -28,4 +32,12 @@ def saveScoreData(processId: int, configId: int , keywordsScorePercentage:float,
                                        'experienceScore': experienceScorePercentage, 
                                        'educationScore': educationScorePercentage,
                                        'finalScore': finalScorePercentage,
+                                       'uploadedDateTime': datetime.datetime.utcnow()}) 
+    
+def saveScoreConfigData(jobId: int, keywordsScorePercentage:float, experienceScorePercentage : float, educationScorePercentage : float):
+    ScoreConfig.objects.update_or_create(jobId = jobId , 
+                                   defaults={
+                                       'keywordsConfig': keywordsScorePercentage, 
+                                       'experienceConfig': experienceScorePercentage, 
+                                       'educationConfig': educationScorePercentage,
                                        'uploadedDateTime': datetime.datetime.utcnow()}) 

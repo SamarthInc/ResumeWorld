@@ -17,6 +17,18 @@ class Score(models.Model):
 
 
 class ScoreConfig(models.Model):
+    jobId = models.BigIntegerField(primary_key=True)
+    keywordsConfig = models.IntegerField(null=True)
+    experienceConfig = models.IntegerField(null=True)
+    educationConfig=models.IntegerField(null=True)
+    uploadedDateTime = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.jobId
+    class Meta:
+        db_table = "score_config"
+
+class DefaultScoreConfig(models.Model):
     id = models.BigIntegerField(primary_key=True)
     keywordsConfig = models.IntegerField(null=True)
     experienceConfig = models.IntegerField(null=True)
@@ -26,4 +38,4 @@ class ScoreConfig(models.Model):
     def __str__(self):
         return self.id
     class Meta:
-        db_table = "score_config"
+        db_table = "default_score_config"        

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from reportExtractor.models import Score, ScoreConfig
+from reportExtractor.models import DefaultScoreConfig, Score, ScoreConfig
 
    
 class ScoreSerializer(serializers.ModelSerializer):
@@ -11,4 +11,9 @@ class ScoreSerializer(serializers.ModelSerializer):
 class ScoreConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScoreConfig
-        fields = ('id','keywordsConfig' ,'experienceConfig','educationConfig', 'uploadedDateTime')
+        fields = ('jobId', 'keywordsConfig' ,'experienceConfig','educationConfig', 'uploadedDateTime')
+
+class DefaultScoreConfigSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefaultScoreConfig
+        fields = ('id','keywordsConfig' ,'experienceConfig','educationConfig', 'uploadedDateTime')        

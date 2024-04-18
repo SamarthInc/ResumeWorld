@@ -1,6 +1,7 @@
 import datetime
 from .models import Process, Resume, JobDescription
 from .serializer import ExtendedProcessSerializer, JobDescriptionSerializer, ProcessSerializer, ResumeSerializer
+from django.db.models import Q
 
 def getProcess(id):
     process = Process.objects.get(id=id)
@@ -63,5 +64,11 @@ def saveProcessWithExistingData( userId : int, reqId : int, profileId: int ):
 def saveJobDescription( userId : int, jdText : str, jdTitle: str ):
     return JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow());
 
-def saveResume( userId : int, resumeText: str, fileName : str ):
-    return Resume.objects.create(userId = userId, resumeText = resumeText, fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow());
+def saveResume( userId : int, resumeText: str, profileTitle : str, fileName : str ):
+    return Resume.objects.create(userId = userId, resumeText = resumeText, profileTitle = profileTitle , fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow());
+
+def deleteJobDescription(userId : int, reqId: int):
+    return JobDescription.objects.filter(reqId=reqId, userId=userId).delete()
+
+def deleteResume(userId : int, profileId: int):
+    return Resume.objects.filter(profileId=profileId, userId=userId).delete()

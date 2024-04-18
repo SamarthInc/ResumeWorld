@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
 from processHandler.utilities.ReadDoc import readDoc
-from processHandler.views import getExtendedProcessesByUserId, getProcess, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume
-from reportExtractor.views import scoreData
+from processHandler.views import deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getProcess, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume
+from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from .uploadSerializer import UploadSerializer
 from rest_framework.permissions import IsAuthenticated
     
@@ -46,10 +46,16 @@ class UploadViewSet(ViewSet):
 
     def saveJobDescription(self, request):
         process = saveJobDescription(request.user.id, request.data['jdText'] , request.data['jdTitle'])
+        defaultConfig = defaultScoreConfigDataDto(1)
+        keywordsConfig = request.POST.get('keywordsConfig', defaultConfig.keywordsConfig)
+        experienceConfig = request.POST.get('experienceConfig', defaultConfig.experienceConfig)
+        educationConfig = request.POST.get('educationConfig', defaultConfig.educationConfig)
+        saveScoreConfigData(process.reqId, keywordsConfig, experienceConfig, educationConfig)
         return Response(process.reqId) 
 
     def saveResume(self, request):
         fileUploaded = request.FILES['resume']
+        profileTitle = request.data['profileTitle']
         content_type = fileUploaded.content_type
         checkfile = fileUploaded.name.split(".")
         print(checkfile)
@@ -58,7 +64,7 @@ class UploadViewSet(ViewSet):
                 data =readPdf(fileUploaded)
             if str(checkfile[1]) == "docx":
                 data =readDoc(fileUploaded)
-            process = saveResume(request.user.id, data, fileUploaded.name)
+            process = saveResume(request.user.id, data, profileTitle, fileUploaded.name)
             return Response(process.profileId)    
         else:
             response = "POST API and you have uploaded a {} file".format(content_type)
@@ -67,3 +73,9 @@ class UploadViewSet(ViewSet):
     def getReport(self,request):
         processId = request.query_params.get('processId')
         return Response(scoreData(processId))   
+    
+    def deleteJobDescription(self,request):
+        return Response(deleteJobDescription(request.user.id,request.query_params.get('reqId')))
+    
+    def deleteResume(self,request):
+        return Response(deleteResume(request.user.id,request.query_params.get('profileId')))
