@@ -1,7 +1,6 @@
 import datetime
 from .models import Process, Resume, JobDescription
 from .serializer import ExtendedProcessSerializer, JobDescriptionSerializer, ProcessSerializer, ResumeSerializer
-from django.db.models import Q
 
 def getProcess(id):
     process = Process.objects.get(id=id)
@@ -22,12 +21,12 @@ def getExtendedProcessDto(userId):
     return processes
 
 def getJobDescription(id):
-    jobDescription = JobDescription.objects.get(id=id)
+    jobDescription = JobDescription.objects.get(reqId=id)
     serializer = JobDescriptionSerializer(jobDescription, many=False)
     return serializer.data
 
 def getJobDescriptionDto(id):
-    return JobDescription.objects.get(id=id)
+    return JobDescription.objects.get(reqId=id)
 
 def getJobDescriptionsByUserId(userId):
     jobDescription = JobDescription.objects.filter(userId=userId)
@@ -38,12 +37,12 @@ def getJobDescriptionsByUserIdDto(userId):
     return JobDescription.objects.filter(userId=userId)
 
 def getResume(id):
-    resume = Resume.objects.get(id=id)
+    resume = Resume.objects.get(profileId=id)
     serializer = ResumeSerializer(resume, many=False)
     return serializer.data
 
 def getResumeDto(id):
-    return Resume.objects.get(id=id)
+    return Resume.objects.get(profileId=id)
 
 def getResumesByUserId(userId):
     resume = Resume.objects.filter(userId=userId)

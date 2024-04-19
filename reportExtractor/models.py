@@ -13,7 +13,7 @@ class Score(models.Model):
     def __str__(self):
         return self.id
     class Meta:
-        db_table = "score"
+        db_table = "score"     
 
 
 class ScoreConfig(models.Model):

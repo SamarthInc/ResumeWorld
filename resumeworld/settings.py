@@ -46,10 +46,20 @@ INSTALLED_APPS = [
     'root',
     'environ',
     'pypdf',
+    'corsheaders',
+    'nltk',
+    'spacy',
+    'sentence_transformers',
     'processHandler',
     'reportExtractor',
-    'corsheaders',
     'users',
+    'analysis',
+    'dataExtractor',
+    'dataExtractor.candidate',
+    'dataExtractor.experience',
+    'dataExtractor.education',
+    'dataExtractor.jobDescription',
+    'dataExtractor.resume',
     'rest_framework_simplejwt.token_blacklist'
 ]
 
@@ -85,14 +95,6 @@ ROOT_URLCONF = 'resumeWorld.urls'
 WSGI_APPLICATION = 'resumeWorld.wsgi.application'
 
 DATABASES = {
-    "default": {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "resumeworld10",
-        'USER': "postgres",
-        'PASSWORD': "test",
-        'HOST': "localhost",
-        'PORT': "5432",
-    }
 }
 
 # Internationalization
@@ -128,7 +130,12 @@ REST_FRAMEWORK = {
 MIGRATION_MODULES = {
     'root': None,
     'reportExtractor' : None,
-    'django.contrib.auth' : None
+    'processHandler' : None,
+    'users' : None,
+    'django.contrib.auth' : None,
+    'admin': None,
+    'auth' : None,
+    'sessions' : None
 }
 
 CORS_ALLOW_ALL_ORIGINS = True

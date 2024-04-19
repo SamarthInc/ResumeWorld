@@ -34,10 +34,10 @@ def saveScoreData(processId: int, configId: int , keywordsScorePercentage:float,
                                        'finalScore': finalScorePercentage,
                                        'uploadedDateTime': datetime.datetime.utcnow()}) 
     
-def saveScoreConfigData(jobId: int, keywordsScorePercentage:float, experienceScorePercentage : float, educationScorePercentage : float):
+def saveScoreConfigData(jobId: int, keywordsConfig:float, experienceConfig : float, educationConfig : float):
     ScoreConfig.objects.update_or_create(jobId = jobId , 
                                    defaults={
-                                       'keywordsConfig': keywordsScorePercentage, 
-                                       'experienceConfig': experienceScorePercentage, 
-                                       'educationConfig': educationScorePercentage,
+                                       'keywordsConfig': keywordsConfig, 
+                                       'experienceConfig': experienceConfig, 
+                                       'educationConfig': educationConfig,
                                        'uploadedDateTime': datetime.datetime.utcnow()}) 

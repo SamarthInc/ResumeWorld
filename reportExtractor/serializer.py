@@ -7,7 +7,6 @@ class ScoreSerializer(serializers.ModelSerializer):
         model = Score
         fields = ('id','configId' , 'keywordsScore' ,'experienceScore','educationScore','finalScore', 'uploadedDateTime') 
 
-
 class ScoreConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScoreConfig

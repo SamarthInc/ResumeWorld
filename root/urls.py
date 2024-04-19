@@ -3,6 +3,7 @@ from .views import UploadViewSet
 #from .comparision.storing import ResumeJobStoring
 
 urlpatterns = [
+    path('auth/',include('users.urls')),
     path('getProcess', UploadViewSet.as_view({'get': 'getProcess'})),
     path('getProcessesByUserId', UploadViewSet.as_view({'get': 'getProcessesByUserId'})),
     path('getResumesByUserId', UploadViewSet.as_view({'get': 'getResumesByUserId'})),
@@ -14,6 +15,14 @@ urlpatterns = [
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
     path('deleteJobDescription', UploadViewSet.as_view({'delete': 'deleteJobDescription'})),
     path('deleteResume', UploadViewSet.as_view({'delete': 'deleteResume'})),
-    path('auth/',include('users.urls')),
+    path('processResume', UploadViewSet.as_view({'post': 'ProcessResume'})),
+    path('getCleanResume', UploadViewSet.as_view({'get': 'GetCleanResume'})),
+    path('getCleanJobDescription', UploadViewSet.as_view({'get': 'GetCleanJobDescription'})),
+    path('getCandidate', UploadViewSet.as_view({'get': 'getCandidate'})),
+    path('getEducation', UploadViewSet.as_view({'get': 'getEducation'})),
+    path('getExperience', UploadViewSet.as_view({'get': 'getExperience'})),
+    path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
+    path('getReportConfig', UploadViewSet.as_view({'get': 'getReportConfig'})),
+    path('getKeywords', UploadViewSet.as_view({'get': 'getKeywords'}))
 ]
 
