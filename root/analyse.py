@@ -34,9 +34,6 @@ def getKeywords(processId):
 def getReport(processId):
     return scoreData(processId)
 
-def getReportV2(processId):
-    return scoreDataV2(processId)
-
 def getReportConfig(configId):
     return scoreConfigData(configId)
 
