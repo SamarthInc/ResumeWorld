@@ -1,0 +1,870 @@
+{
+	"info": {
+		"_postman_id": "ffd81305-2c22-4fb4-b3a1-931cb3cbf3b0",
+		"name": "ResumeWorld",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32001225"
+	},
+	"item": [
+		{
+			"name": "Getting Token based on email and password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test.sashank1@test.com\",\n    \"password\" : \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/auth/token",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzNjcxMjQ4LCJpYXQiOjE3MTM2NjA0NDgsImp0aSI6Ijc1Njk4NTZkZTUzOTQwYzFiZWI2MDhjZjZjNzY4NzI1IiwidXNlcl9pZCI6Mn0.WEuPAyenzedc_vkJdC79WRzpCJIGrow08hozeNp_jbA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test.sashank1@test.com\",\n    \"password\" : \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/auth/user",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshToken",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNzE4MTY4OCwiaWF0IjoxNzEyODYxNjg4LCJqdGkiOiI3MTFhZTg2ZjY3MmU0OWZkYWNlYzZiYTRhMzlmOTNlZSIsInVzZXJfaWQiOjExfQ.cvaoyK1f2kLT5ehXcQ1GfPXpch-Qidw9YDpUdspJtqo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/auth/token/refresh",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"auth",
+						"token",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register based on email and password Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test.sashank101@test.com\",\n    \"password\": \"test\",\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"Role\": \"EMPLOYER | EMPLOYEE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNTAzMzU2NiwiaWF0IjoxNzEwNzEzNTY2LCJqdGkiOiIwYzNjOWM2YjY1ZWU0OWJmYmQ3Y2ZkNjNlODI1MTg5NSIsInVzZXJfaWQiOjR9.WP2ehesh-sObiVDY_DX0OooxIVZlQnFnHaXOigl5vkM\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/auth/logout",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Resume By user Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getResumesByUserId",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getResumesByUserId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete resume",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODkwODUzLCJpYXQiOjE3MTI4ODAwNTMsImp0aSI6ImI4YjE0MDIyOTJhODQ2NDZiNTIxMzIyMmQ3OTQ1ZGEyIiwidXNlcl9pZCI6MTF9.dJZLqXa75RYL0wyq_Id_5T4x66RpdaqD54Qpcyy4j0I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/deleteResume?profileId=28",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"deleteResume"
+					],
+					"query": [
+						{
+							"key": "profileId",
+							"value": "28"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete jobDescription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODkwODUzLCJpYXQiOjE3MTI4ODAwNTMsImp0aSI6ImI4YjE0MDIyOTJhODQ2NDZiNTIxMzIyMmQ3OTQ1ZGEyIiwidXNlcl9pZCI6MTF9.dJZLqXa75RYL0wyq_Id_5T4x66RpdaqD54Qpcyy4j0I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/deleteJobDescription?reqId=13",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"deleteJobDescription"
+					],
+					"query": [
+						{
+							"key": "reqId",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get JobDescription By user Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getJobDescriptionsByUserId",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getJobDescriptionsByUserId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get JobDescription By user Id Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getJobDescriptionsByUserId",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getJobDescriptionsByUserId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Resume",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODkwODUzLCJpYXQiOjE3MTI4ODAwNTMsImp0aSI6ImI4YjE0MDIyOTJhODQ2NDZiNTIxMzIyMmQ3OTQ1ZGEyIiwidXNlcl9pZCI6MTF9.dJZLqXa75RYL0wyq_Id_5T4x66RpdaqD54Qpcyy4j0I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": "/Users/sanjanabalatatapudi/Desktop/baseline resumes/Ashlesh Resume.pdf"
+						},
+						{
+							"key": "profileTitle",
+							"value": "Ashlesh 3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/saveResume",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"saveResume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save JobDescription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODg4ODk2LCJpYXQiOjE3MTI4NzgwOTYsImp0aSI6IjdiMWMxMWJmMzhhMTQ5ZTY5OWY2NDdjNDA2NzY3MTJmIiwidXNlcl9pZCI6MTF9.5TKNg71e_kG8P3B5Itc5CH3AA8uWBvYH2rYQslHXbes",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": "/Users/sanjanabalatatapudi/Desktop/baseline resumes/Ashlesh Resume.pdf",
+							"disabled": true
+						},
+						{
+							"key": "jdText",
+							"value": "Test Demo 123 123",
+							"type": "text"
+						},
+						{
+							"key": "jdTitle",
+							"value": "sdet4",
+							"type": "text"
+						},
+						{
+							"key": "keywordsConfig",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "experienceConfig",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "educationConfig",
+							"value": "40",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/saveJobDescription",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"saveJobDescription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveProcessWithExistingData",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODkwODUzLCJpYXQiOjE3MTI4ODAwNTMsImp0aSI6ImI4YjE0MDIyOTJhODQ2NDZiNTIxMzIyMmQ3OTQ1ZGEyIiwidXNlcl9pZCI6MTF9.dJZLqXa75RYL0wyq_Id_5T4x66RpdaqD54Qpcyy4j0I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reqId\" : 22,\n    \"profileId\" : 18\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/saveProcessWithExistingData",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"saveProcessWithExistingData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "processResume",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"processId\": 25\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/processResume",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"processResume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  Report",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getReport?processId=25",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getReport"
+					],
+					"query": [
+						{
+							"key": "processId",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCandidate",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getCandidate?processId=25",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getCandidate"
+					],
+					"query": [
+						{
+							"key": "processId",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getExperience",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getExperience?processId=25",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getExperience"
+					],
+					"query": [
+						{
+							"key": "processId",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEducation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getEducation?processId=25",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getEducation"
+					],
+					"query": [
+						{
+							"key": "processId",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getKeywords",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEyODcyODUzLCJpYXQiOjE3MTI4NjIwNTMsImp0aSI6ImI2YmYxZjRlYzI2ZDQ4YTY5NTMxNWQ5YjU0ZDM1ZmQ5IiwidXNlcl9pZCI6MTF9.LncLSl6WFe5nVBcAkY4IPBnj0DqrQBtNl_-EVbiupi4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resume",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "jobDescription",
+							"value": "Test Demo 123 123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/root/getKeywords?processId=25",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"root",
+						"getKeywords"
+					],
+					"query": [
+						{
+							"key": "processId",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
