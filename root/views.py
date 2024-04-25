@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
 from processHandler.utilities.ReadDoc import readDoc
-from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume
+from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
 from .uploadSerializer import BaseRsSerializer, UploadSerializer
@@ -45,16 +45,12 @@ class UploadViewSet(ViewSet):
             raise RootException(detail="POST API and you have uploaded a {} file".format(content_type))
 
     def saveProcessWithExistingData(self, request):
-        resume = None 
-        jd = None 
-        try :
-            resume = getResumeDto(request.data['profileId'])
-        except:
-            resume = None  
-        try :
-            jd = getJobDescriptionDto(request.data['reqId'])
-        except :
-            jd = None 
+        print(request.data['profileId'])
+        resume = getResumeDto(request.data['profileId'])
+        print(resume)
+        if resume.isActive == False :
+            raise RootException(detail="resume is inactive")
+        jd = getJobDescriptionDto(request.data['reqId'])
         if jd is None or resume is None :
             raise RootException(detail="process or resume doesnt exist")
         if jd.userId != request.user.id or resume.userId != request.user.id :
@@ -81,11 +77,22 @@ class UploadViewSet(ViewSet):
                 data =readPdf(fileUploaded)
             if str(checkfile[1]) == "docx":
                 data =readDoc(fileUploaded)
-            process = saveResume(request.user.id, data, profileTitle, fileUploaded.name)
+            process = saveResume(request.user, data, profileTitle, fileUploaded.name)
             return Response(process)    
         else:
             raise RootException(detail="POST API and you have uploaded a {} file".format(content_type))
         
+    def updateResumeActiveFlag(self,request):
+        resume = None 
+        try :
+            resume = getResumeDto(request.data['profileId'])
+        except:
+            resume = None  
+        if resume.userId != request.user.id :
+            raise RootException(detail="resume doesnt map to userId")
+        updateResumeActiveFlag(request.user, request.data['profileId'], request.data['isActive'])
+        return Response(BaseRsSerializer(BaseRs(status = "200", message= "success"), many=False).data)  
+     
     def getReport(self,request):
         processId = request.query_params.get('processId')
         return Response(scoreData(processId))   

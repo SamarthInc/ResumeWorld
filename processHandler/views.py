@@ -73,9 +73,23 @@ def saveJobDescription( userId : int, jdText : str, jdTitle: str ):
     serializer = JobDescriptionSerializer(JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
     return serializer.data;
 
-def saveResume( userId : int, resumeText: str, profileTitle : str, fileName : str ):
-    serializer = ResumeSerializer(Resume.objects.create(userId = userId, resumeText = resumeText, profileTitle = profileTitle , fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
+def saveResume( user, resumeText: str, profileTitle : str, fileName : str ):
+    if user.role.lower() == "EMPLOYEE".lower() :
+        resumes = getResumesByUserIdDto(user.id)
+        profileIds = [ resume.profileId for resume in resumes ]
+        updateResumeActiveFlags(profileIds,False)
+    serializer = ResumeSerializer(Resume.objects.create(userId = user.id, resumeText = resumeText, profileTitle = profileTitle , fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
     return serializer.data;
+
+def updateResumeActiveFlags( profileIds , flag: bool):
+    Resume.objects.filter(profileId__in =profileIds).update(isActive = flag)
+
+def updateResumeActiveFlag( user, profileId , flag: bool):
+    if user.role.lower() == "EMPLOYEE".lower() :
+        resumes = getResumesByUserIdDto(user.id)
+        profileIds = [ resume.profileId for resume in resumes ]
+        updateResumeActiveFlags(profileIds,False)    
+    Resume.objects.filter(profileId = profileId).update(isActive = flag)
 
 def deleteJobDescription(userId : int, reqId: int):
     JobDescription.objects.filter(reqId=reqId, userId=userId).delete()

@@ -11,13 +11,14 @@ class JobDescription(models.Model):
         unique_together = 'userId', 'jdTitle'   
 
     def __str__(self):
-        return self.reqId  
+        return str(self.reqId)
     
 class Resume(models.Model):
     profileId = models.AutoField (primary_key=True)
     userId = models.BigIntegerField(null=True)
     resumeText = models.TextField()
     profileTitle = models.TextField(null=True)
+    isActive = models.BooleanField(null=False,default=True)
     fileName = models.TextField()
     uploadedDateTime = models.DateTimeField()
 
@@ -25,7 +26,7 @@ class Resume(models.Model):
       unique_together = 'userId', 'profileTitle'
 
     def __str__(self):
-        return self.profileId
+        return str(self.profileId)
 
 
 class Process(models.Model):
@@ -36,4 +37,4 @@ class Process(models.Model):
     uploadedDateTime = models.DateTimeField()
 
     def __str__(self):
-        return self.id  
+        return str(self.id)

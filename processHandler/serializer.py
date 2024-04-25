@@ -15,7 +15,7 @@ class JobDescriptionSerializer(serializers.ModelSerializer):
 class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ('profileId', 'userId', 'resumeText', 'profileTitle', 'fileName','uploadedDateTime')
+        fields = ('profileId', 'userId', 'resumeText', 'profileTitle', 'isActive', 'fileName','uploadedDateTime')
 
 
 class ExtendedProcessSerializer(serializers.ModelSerializer):

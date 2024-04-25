@@ -129,14 +129,9 @@ REST_FRAMEWORK = {
     }
 
 MIGRATION_MODULES = {
-    'root': None,
-    'reportExtractor' : None,
-    'processHandler' : None,
-    'users' : None,
-    'django.contrib.auth' : None,
     'admin': None,
-    'auth' : None,
-    'sessions' : None
+    'sessions' : None,
+    'root' : None
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
