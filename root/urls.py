@@ -5,6 +5,7 @@ from .views import UploadViewSet
 urlpatterns = [
     path('auth/',include('users.urls')),
     path('getProcess', UploadViewSet.as_view({'get': 'getProcess'})),
+    path('getExtendedProcessesByUserId', UploadViewSet.as_view({'get': 'getExtendedProcessesByUserId'})),
     path('getProcessesByUserId', UploadViewSet.as_view({'get': 'getProcessesByUserId'})),
     path('getResumesByUserId', UploadViewSet.as_view({'get': 'getResumesByUserId'})),
     path('getJobDescriptionsByUserId', UploadViewSet.as_view({'get': 'getJobDescriptionsByUserId'})),
@@ -22,6 +23,7 @@ urlpatterns = [
     path('getEducation', UploadViewSet.as_view({'get': 'getEducation'})),
     path('getExperience', UploadViewSet.as_view({'get': 'getExperience'})),
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
+    path('getReports', UploadViewSet.as_view({'get': 'getReports'})),
     path('getReportConfig', UploadViewSet.as_view({'get': 'getReportConfig'})),
     path('getKeywords', UploadViewSet.as_view({'get': 'getKeywords'}))
 ]

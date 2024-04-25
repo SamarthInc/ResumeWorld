@@ -24,6 +24,15 @@ def scoreDataDto(id):
     all_scores = Score.objects.get(id=id)
     return all_scores
 
+def multipleScoreData(ids):
+    all_scores = Score.objects.filter(id__in=ids)
+    serializer = ScoreSerializer(all_scores, many=True)
+    return serializer.data    
+
+def multipleScoreDataDto(ids):
+    all_scores = Score.objects.filter(id__in=ids)
+    return all_scores
+
 def saveScoreData(processId: int, configId: int , keywordsScorePercentage:float, experienceScorePercentage : float, educationScorePercentage : float , finalScorePercentage : float):
     Score.objects.update_or_create(id = processId , 
                                    defaults={

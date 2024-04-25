@@ -95,7 +95,6 @@ ROOT_URLCONF = 'resumeWorld.urls'
 WSGI_APPLICATION = 'resumeWorld.wsgi.application'
 
 DATABASES = {
-
 }
 
 # Internationalization
@@ -125,7 +124,8 @@ REST_FRAMEWORK = {
      'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'EXCEPTION_HANDLER': 'root.exceptionHandler.custom_exception_handler'
     }
 
 MIGRATION_MODULES = {

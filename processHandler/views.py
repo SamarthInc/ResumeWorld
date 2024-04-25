@@ -1,4 +1,7 @@
 import datetime
+
+from root.models import BaseRs
+from root.uploadSerializer import BaseRsSerializer
 from .models import Process, Resume, JobDescription
 from .serializer import ExtendedProcessSerializer, JobDescriptionSerializer, ProcessSerializer, ResumeSerializer
 
@@ -10,15 +13,19 @@ def getProcess(id):
 def getProcessDto(id):
     return Process.objects.get(id=id)
 
+def getProcessesByUserId(userId):
+    process = Process.objects.filter(userId=userId)
+    serializer = ProcessSerializer(process, many=True)
+    return serializer.data
+
+def getProcessByUserIdDto(userId):
+    processes = Process.objects.filter(userId=userId)
+    return processes
+
 def getExtendedProcessesByUserId(userId):
-    print(userId)
     process = Process.objects.filter(userId=userId)
     serializer = ExtendedProcessSerializer(process, many=True)
     return serializer.data
-
-def getExtendedProcessDto(userId):
-    processes = Process.objects.filter(userId=userId)
-    return processes
 
 def getJobDescription(id):
     jobDescription = JobDescription.objects.get(reqId=id)
@@ -55,19 +62,27 @@ def getResumesByUserIdDto(userId):
 def saveProcess( userId : int, jdText : str, jdTitle: str , resumeText: str, fileName : str ):
     saveResume = Resume.objects.create(userId = userId, resumeText = resumeText, fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow());
     saveJd = JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow());
-    return Process.objects.create(userId = userId, reqId = saveJd.reqId, profileId= saveResume.profileId ,uploadedDateTime = datetime.datetime.utcnow())
+    serializer = ProcessSerializer(Process.objects.create(userId = userId, reqId = saveJd.reqId, profileId= saveResume.profileId ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
+    return serializer.data
 
 def saveProcessWithExistingData( userId : int, reqId : int, profileId: int ):
-    return Process.objects.create(userId = userId, reqId = reqId, profileId= profileId ,uploadedDateTime = datetime.datetime.utcnow())
+    serializer = ProcessSerializer(Process.objects.create(userId = userId, reqId = reqId, profileId= profileId ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
+    return serializer.data
 
 def saveJobDescription( userId : int, jdText : str, jdTitle: str ):
-    return JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow());
+    serializer = JobDescriptionSerializer(JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
+    return serializer.data;
 
 def saveResume( userId : int, resumeText: str, profileTitle : str, fileName : str ):
-    return Resume.objects.create(userId = userId, resumeText = resumeText, profileTitle = profileTitle , fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow());
+    serializer = ResumeSerializer(Resume.objects.create(userId = userId, resumeText = resumeText, profileTitle = profileTitle , fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
+    return serializer.data;
 
 def deleteJobDescription(userId : int, reqId: int):
-    return JobDescription.objects.filter(reqId=reqId, userId=userId).delete()
+    JobDescription.objects.filter(reqId=reqId, userId=userId).delete()
+    serializer = BaseRsSerializer(BaseRs(status = "200", message="success"), many=False)
+    return serializer.data;
 
 def deleteResume(userId : int, profileId: int):
-    return Resume.objects.filter(profileId=profileId, userId=userId).delete()
+    Resume.objects.filter(profileId=profileId, userId=userId).delete()
+    serializer = BaseRsSerializer(BaseRs(status = "200", message="success"), many=False)
+    return serializer.data;
