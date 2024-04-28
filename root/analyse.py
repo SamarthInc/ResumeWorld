@@ -40,6 +40,9 @@ def getReports(processIds):
 def getReportConfig(configId):
     return scoreConfigData(configId)
 
+def getExtendedReport(processId):
+    return scoreDataWithConfig(processId)
+
 def calculateFinalscore(configId: int, keywordsScorePercentage:float, experienceScorePercentage : float, educationScorePercentage : float ):
     config = scoreConfigDataDto(configId)
     keywordsScorePercentagePerConfig = 0

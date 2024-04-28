@@ -1,5 +1,5 @@
 from reportExtractor.models import DefaultScoreConfig, Score, ScoreConfig
-from reportExtractor.serializer import ScoreSerializer, ScoreConfigSerializer
+from reportExtractor.serializer import ExtendedScoreSerializer, ScoreSerializer, ScoreConfigSerializer
 import datetime
 
 def scoreConfigDataDto(jobId):
@@ -18,6 +18,11 @@ def defaultScoreConfigDataDto(id):
 def scoreData(id):
     all_scores = Score.objects.get(id=id)
     serializer = ScoreSerializer(all_scores, many=False)
+    return serializer.data    
+
+def scoreDataWithConfig(id):
+    all_scores = Score.objects.get(id=id)
+    serializer = ExtendedScoreSerializer(all_scores, many=False)
     return serializer.data    
 
 def scoreDataDto(id):

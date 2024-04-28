@@ -5,7 +5,7 @@ from processHandler.utilities.ReadDoc import readDoc
 from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
-from .uploadSerializer import BaseRsSerializer, UploadSerializer
+from .uploadSerializer import BaseRsSerializer, ExtendedReportSerializer, UploadSerializer
 from root.analyse import *
 from rest_framework.permissions import IsAuthenticated
     
@@ -14,6 +14,11 @@ class UploadViewSet(ViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = UploadSerializer
 
+    def validateProcess(self,processId, userId):
+        process = getProcessDto(processId)
+        if process.userId != userId :
+            raise RootException(detail="user is not associated to process")   
+        
     def getProcess(self, request):
         processId = request.query_params.get('processId')
         return Response(getProcess(processId));
@@ -115,31 +120,45 @@ class UploadViewSet(ViewSet):
 
     def getCleanResume(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getResume(processId))
     
     def getCleanJobDescription(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)        
         return Response(getJd(processId))
 
     def getCandidate(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getProfile(processId))
 
     def getEducation(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getEducation(processId))
 
     def getExperience(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getExperience(processId))
     
     def getKeywords(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getKeywords(processId))
     
     def getReport(self,request):
         processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
         return Response(getReport(processId))
+    
+    def getExtendedReport(self,request):
+        processId = request.query_params.get('processId')
+        self.validateProcess(processId, request.user.id)
+        process = getProcessDto(processId)
+        serializer = ExtendedReportSerializer(process, many=False)
+        return Response(serializer.data)
     
     def getReports(self,request):
         processes = getProcessByUserIdDto(request.user.id)
@@ -148,4 +167,4 @@ class UploadViewSet(ViewSet):
     
     def getReportConfig(self,request):
         configId = request.query_params.get('configId')
-        return Response(getReportConfig(configId))
+        return Response(getReportConfig(configId))     

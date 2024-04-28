@@ -23,6 +23,7 @@ urlpatterns = [
     path('getCandidate', UploadViewSet.as_view({'get': 'getCandidate'})),
     path('getEducation', UploadViewSet.as_view({'get': 'getEducation'})),
     path('getExperience', UploadViewSet.as_view({'get': 'getExperience'})),
+    path('getExtendedReport', UploadViewSet.as_view({'get': 'getExtendedReport'})),
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
     path('getReports', UploadViewSet.as_view({'get': 'getReports'})),
     path('getReportConfig', UploadViewSet.as_view({'get': 'getReportConfig'})),
