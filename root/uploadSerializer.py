@@ -67,4 +67,31 @@ class ExtendedReportSerializer(serializers.ModelSerializer):
         try :
             return getProfile(obj.id)    
         except:
-            return None       
+            return None     
+
+
+
+
+class LimitedExtendedReportSerializer(serializers.ModelSerializer):
+    resume = serializers.SerializerMethodField()
+    jobDescription = serializers.SerializerMethodField()
+    scoreDetails = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Process
+        fields = ('id', 'userId', 'reqId', 'profileId', 'uploadedDateTime', 
+                  'resume','jobDescription', 'scoreDetails')   
+
+    def get_resume(self, obj):
+        resume = Resume.objects.filter(profileId=obj.profileId).get()
+        return {'profileId' :resume.profileId , 'profileTitle': resume.profileTitle}
+
+    def get_jobDescription(self, obj):
+        jobDescription = JobDescription.objects.filter(reqId=obj.reqId).get()
+        return {'reqId' :jobDescription.reqId , 'jdTitle': jobDescription.jdTitle} 
+
+    def get_scoreDetails(self, obj):
+        try :
+         return getExtendedReport(obj.id)
+        except:
+            return None         

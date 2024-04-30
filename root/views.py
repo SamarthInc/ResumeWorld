@@ -5,7 +5,7 @@ from processHandler.utilities.ReadDoc import readDoc
 from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
-from .uploadSerializer import BaseRsSerializer, ExtendedReportSerializer, UploadSerializer
+from .uploadSerializer import BaseRsSerializer, ExtendedReportSerializer, LimitedExtendedReportSerializer, UploadSerializer
 from root.analyse import *
 from rest_framework.permissions import IsAuthenticated
     
@@ -162,8 +162,10 @@ class UploadViewSet(ViewSet):
     
     def getReports(self,request):
         processes = getProcessByUserIdDto(request.user.id)
-        processIds = [ process.id for process in processes ]
-        return Response(getReports(processIds))
+        reports =[]
+        for process in processes:
+            reports.append(LimitedExtendedReportSerializer(process).data) 
+        return Response(reports)
     
     def getReportConfig(self,request):
         configId = request.query_params.get('configId')

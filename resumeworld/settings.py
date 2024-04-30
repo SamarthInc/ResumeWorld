@@ -95,6 +95,7 @@ ROOT_URLCONF = 'resumeWorld.urls'
 WSGI_APPLICATION = 'resumeWorld.wsgi.application'
 
 DATABASES = {
+
 }
 
 # Internationalization
