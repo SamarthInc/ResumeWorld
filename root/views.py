@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
 from processHandler.utilities.ReadDoc import readDoc
-from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateResumeActiveFlag
+from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateJobDescription, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
 from .uploadSerializer import BaseRsSerializer, ExtendedReportSerializer, LimitedExtendedReportSerializer, UploadSerializer
@@ -34,6 +34,13 @@ class UploadViewSet(ViewSet):
 
     def getJobDescriptionsByUserId(self, request):
         return Response(getJobDescriptionsByUserId(request.user.id));
+
+    def updateJobDescription(self, request) :
+        userJds= getJobDescriptionsByUserId(request.user.id)
+        for resume in userJds :
+            if resume['reqId'] == request.data['reqId'] :
+                return Response(updateJobDescription(request.data['reqId'], request.data['jdText']));
+        raise RootException(detail="user is not associated to job description")          
 
     def saveProcess(self, request):
         fileUploaded = request.FILES['resume']

@@ -12,6 +12,7 @@ urlpatterns = [
     path('saveProcess', UploadViewSet.as_view({'post': 'saveProcess'})),
     path('saveProcessWithExistingData', UploadViewSet.as_view({'post': 'saveProcessWithExistingData'})),
     path('saveJobDescription', UploadViewSet.as_view({'post': 'saveJobDescription'})),
+    path('updateJobDescription', UploadViewSet.as_view({'post': 'updateJobDescription'})),
     path('saveResume', UploadViewSet.as_view({'post': 'saveResume'})),
     path('updateResumeActiveFlag', UploadViewSet.as_view({'post': 'updateResumeActiveFlag'})),
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),

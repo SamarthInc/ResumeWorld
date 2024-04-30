@@ -73,6 +73,9 @@ def saveJobDescription( userId : int, jdText : str, jdTitle: str ):
     serializer = JobDescriptionSerializer(JobDescription.objects.create(userId = userId, jdText = jdText, jdTitle= jdTitle ,uploadedDateTime = datetime.datetime.utcnow()), many=False)
     return serializer.data;
 
+def updateJobDescription(reqId:int, jdText : str ):
+    return JobDescription.objects.filter(reqId =reqId).update(jdText = jdText ,uploadedDateTime = datetime.datetime.utcnow())
+
 def saveResume( user, resumeText: str, profileTitle : str, fileName : str ):
     if user.role.lower() == "EMPLOYEE".lower() :
         resumes = getResumesByUserIdDto(user.id)
