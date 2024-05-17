@@ -14,7 +14,7 @@ def EmailUploadFilter(email,message):
     emailUpload=EmailUpload.objects.filter(emailId=email,message=message)
     return emailUpload
 
-def saveEmail_and_Send(email : str,message: str):
+def saveEmail_and_Send(email : str,message: str,name : str):
     EmailUpload.objects.create(emailId=email,message=message)
-    message=email+2*'\n'+message
+    message=email+2*'\n'+name+'\n'+message
     send_mail("Contact through SampleFE",message,settings.EMAIL_HOST_USER,['nikhileswar.mada@myamico.net'],fail_silently=False)    

@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
     
 # ViewSets define the view behavior.
 class UploadViewSet(ViewSet):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     serializer_class = UploadSerializer
 
     def validateProcess(self,processId, userId):
@@ -184,10 +184,10 @@ class UploadViewSet(ViewSet):
     def contactUs(self,request):
         emailId=request.data['emailId']
         message=request.data['message']
-        
+        name=request.data['name']
         filter=EmailUploadFilter(emailId,message)
         if not filter:
-            saveEmail_and_Send(emailId,message) 
+            saveEmail_and_Send(emailId,message,name) 
         # create a model with emailID and message and sent options if sent is False(Default) then send it else block it
             return Response('Email Sent')
         else:
