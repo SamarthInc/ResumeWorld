@@ -28,6 +28,7 @@ urlpatterns = [
     path('getReport', UploadViewSet.as_view({'get': 'getReport'})),
     path('getReports', UploadViewSet.as_view({'get': 'getReports'})),
     path('getReportConfig', UploadViewSet.as_view({'get': 'getReportConfig'})),
-    path('getKeywords', UploadViewSet.as_view({'get': 'getKeywords'}))
+    path('getKeywords', UploadViewSet.as_view({'get': 'getKeywords'})),
+    path('contactUs', UploadViewSet.as_view({'post': 'contactUs'}))
 ]
 
