@@ -14,16 +14,16 @@ def getProcessDto(id):
     return Process.objects.get(id=id)
 
 def getProcessesByUserId(userId):
-    process = Process.objects.filter(userId=userId)
+    process = Process.objects.filter(userId=userId).order_by('-uploadedDateTime')
     serializer = ProcessSerializer(process, many=True)
     return serializer.data
 
 def getProcessByUserIdDto(userId):
-    processes = Process.objects.filter(userId=userId)
+    processes = Process.objects.filter(userId=userId).order_by('-uploadedDateTime')
     return processes
 
 def getExtendedProcessesByUserId(userId):
-    process = Process.objects.filter(userId=userId)
+    process = Process.objects.filter(userId=userId).order_by('-uploadedDateTime')
     serializer = ExtendedProcessSerializer(process, many=True)
     return serializer.data
 
@@ -36,12 +36,12 @@ def getJobDescriptionDto(id):
     return JobDescription.objects.get(reqId=id)
 
 def getJobDescriptionsByUserId(userId):
-    jobDescription = JobDescription.objects.filter(userId=userId)
+    jobDescription = JobDescription.objects.filter(userId=userId).order_by('-uploadedDateTime')
     serializer = JobDescriptionSerializer(jobDescription, many=True)
     return serializer.data
 
 def getJobDescriptionsByUserIdDto(userId):
-    return JobDescription.objects.filter(userId=userId)
+    return JobDescription.objects.filter(userId=userId).order_by('-uploadedDateTime')
 
 def getResume(id):
     resume = Resume.objects.get(profileId=id)
@@ -52,12 +52,12 @@ def getResumeDto(id):
     return Resume.objects.get(profileId=id)
 
 def getResumesByUserId(userId):
-    resume = Resume.objects.filter(userId=userId)
+    resume = Resume.objects.filter(userId=userId).order_by('-uploadedDateTime')
     serializer = ResumeSerializer(resume, many=True)
     return serializer.data
 
 def getResumesByUserIdDto(userId):
-    return Resume.objects.filter(userId=userId)
+    return Resume.objects.filter(userId=userId).order_by('-uploadedDateTime')
 
 def saveProcess( userId : int, jdText : str, jdTitle: str , resumeText: str, fileName : str ):
     saveResume = Resume.objects.create(userId = userId, resumeText = resumeText, fileName= fileName ,uploadedDateTime = datetime.datetime.utcnow());
@@ -85,14 +85,14 @@ def saveResume( user, resumeText: str, profileTitle : str, fileName : str ):
     return serializer.data;
 
 def updateResumeActiveFlags( profileIds , flag: bool):
-    Resume.objects.filter(profileId__in =profileIds).update(isActive = flag)
+    Resume.objects.filter(profileId__in =profileIds).update(isActive = flag,uploadedDateTime = datetime.datetime.utcnow())
 
 def updateResumeActiveFlag( user, profileId , flag: bool):
-    if user.role.lower() == "EMPLOYEE".lower() :
+    if user.role.lower() == "EMPLOYEE".lower() and flag :
         resumes = getResumesByUserIdDto(user.id)
         profileIds = [ resume.profileId for resume in resumes ]
         updateResumeActiveFlags(profileIds,False)    
-    Resume.objects.filter(profileId = profileId).update(isActive = flag)
+    Resume.objects.filter(profileId = profileId).update(isActive = flag, uploadedDateTime = datetime.datetime.utcnow())
 
 def deleteJobDescription(userId : int, reqId: int):
     JobDescription.objects.filter(reqId=reqId, userId=userId).delete()
