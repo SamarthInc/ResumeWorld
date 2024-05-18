@@ -5,16 +5,14 @@ from processHandler.utilities.ReadDoc import readDoc
 from processHandler.views import getJobDescriptionsByUserIdDto, getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateJobDescription, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
-from users.models import EmailUpload
-from users.serializer import EmailSerializer
 from .uploadSerializer import BaseRsSerializer, ExtendedJobDescription, ExtendedReportSerializer, LimitedExtendedReportSerializer, UploadSerializer
 from root.analyse import *
-from root.admin import EmailUploadFilter,saveEmail_and_Send
+from root.admin import logEmail
 from rest_framework.permissions import IsAuthenticated
     
 # ViewSets define the view behavior.
 class UploadViewSet(ViewSet):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UploadSerializer
 
     def validateProcess(self,processId, userId):
@@ -195,17 +193,16 @@ class UploadViewSet(ViewSet):
         configId = request.query_params.get('configId')
         return Response(getReportConfig(configId)) 
     
+
+
+class UnAuthorizedUploadViewSet(ViewSet):
+
     def contactUs(self,request):
         emailId=request.data['emailId']
         message=request.data['message']
         name=request.data['name']
-        filter=EmailUploadFilter(emailId,message)
-        if not filter:
-            saveEmail_and_Send(emailId,message,name) 
-        # create a model with emailID and message and sent options if sent is False(Default) then send it else block it
-            return Response('Email Sent')
-        else:
-            return Response('Email Sent')
+        logEmail(emailId,message,name) 
+        return Response(BaseRsSerializer(BaseRs(status = "200", message= "Email Sent"), many=False).data)      
         
         
             

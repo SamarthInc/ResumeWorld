@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import UploadViewSet
+from .views import UnAuthorizedUploadViewSet, UploadViewSet
 #from .comparision.storing import ResumeJobStoring
 
 urlpatterns = [
@@ -29,6 +29,6 @@ urlpatterns = [
     path('getReports', UploadViewSet.as_view({'get': 'getReports'})),
     path('getReportConfig', UploadViewSet.as_view({'get': 'getReportConfig'})),
     path('getKeywords', UploadViewSet.as_view({'get': 'getKeywords'})),
-    path('contactUs', UploadViewSet.as_view({'post': 'contactUs'}))
+    path('contactUs', UnAuthorizedUploadViewSet.as_view({'post': 'contactUs'}))
 ]
 

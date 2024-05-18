@@ -28,8 +28,4 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     def __str__(self):
-        return self.email   
-    
-class EmailUpload(models.Model):
-    emailId=models.TextField(null=False)
-    message=models.TextField(null=False)   
+        return self.email
