@@ -2,10 +2,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from processHandler.utilities.ReadPdf import readPdf
 from processHandler.utilities.ReadDoc import readDoc
-from processHandler.views import getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateJobDescription, updateResumeActiveFlag
+from processHandler.views import getJobDescriptionsByUserIdDto, getProcessByUserIdDto, getProcessDto, deleteJobDescription, deleteResume, getExtendedProcessesByUserId, getJobDescriptionDto, getProcess, getProcessesByUserId, getResumeDto, saveProcess, saveProcessWithExistingData, getResumesByUserId, getJobDescriptionsByUserId, saveJobDescription, saveResume, updateJobDescription, updateResumeActiveFlag
 from reportExtractor.views import defaultScoreConfigDataDto, saveScoreConfigData, scoreConfigData, scoreData
 from root.models import BaseRs, RootException
-from .uploadSerializer import BaseRsSerializer, ExtendedReportSerializer, LimitedExtendedReportSerializer, UploadSerializer
+from .uploadSerializer import BaseRsSerializer, ExtendedJobDescription, ExtendedReportSerializer, LimitedExtendedReportSerializer, UploadSerializer
 from root.analyse import *
 from rest_framework.permissions import IsAuthenticated
     
@@ -33,13 +33,17 @@ class UploadViewSet(ViewSet):
         return Response(getResumesByUserId(request.user.id));
 
     def getJobDescriptionsByUserId(self, request):
-        return Response(getJobDescriptionsByUserId(request.user.id));
+        jds = getJobDescriptionsByUserIdDto(request.user.id)
+        extendedJds =[]
+        for jd in jds:
+            extendedJds.append(ExtendedJobDescription(jd).data) 
+        return Response(extendedJds)
 
     def updateJobDescription(self, request) :
         userJds= getJobDescriptionsByUserId(request.user.id)
         for resume in userJds :
-            if resume['reqId'] == request.data['reqId'] :
-                return Response(updateJobDescription(request.data['reqId'], request.data['jdText']));
+            if str(resume['reqId']) == str(request.data['reqId']) :
+                return Response(updateJobDescription(request.data['reqId'], request.data['jdText']))
         raise RootException(detail="user is not associated to job description")          
 
     def saveProcess(self, request):
@@ -57,9 +61,7 @@ class UploadViewSet(ViewSet):
             raise RootException(detail="POST API and you have uploaded a {} file".format(content_type))
 
     def saveProcessWithExistingData(self, request):
-        print(request.data['profileId'])
         resume = getResumeDto(request.data['profileId'])
-        print(resume)
         if resume.isActive == False :
             raise RootException(detail="resume is inactive")
         jd = getJobDescriptionDto(request.data['reqId'])
@@ -70,13 +72,25 @@ class UploadViewSet(ViewSet):
         return Response(saveProcessWithExistingData(request.user.id, request.data['reqId'] , request.data['profileId']))
 
     def saveJobDescription(self, request):
-        process = saveJobDescription(request.user.id, request.data['jdText'] , request.data['jdTitle'])
+        reqId = None
+        process = None
+        try :
+            reqId = request.data['reqId']
+        except:
+            reqId = None
+
+        if reqId != None :  
+            self.updateJobDescription(request)
+        else :
+            reqId = saveJobDescription(request.user.id, request.data['jdText'] , request.data['jdTitle'])['reqId']
+
+        process= getJobDescriptionDto(reqId)    
         defaultConfig = defaultScoreConfigDataDto(1)
         keywordsConfig = request.POST.get('keywordsConfig', defaultConfig.keywordsConfig)
         experienceConfig = request.POST.get('experienceConfig', defaultConfig.experienceConfig)
         educationConfig = request.POST.get('educationConfig', defaultConfig.educationConfig)
-        saveScoreConfigData(process['reqId'], keywordsConfig, experienceConfig, educationConfig)
-        return Response(process) 
+        saveScoreConfigData(reqId, keywordsConfig, experienceConfig, educationConfig)
+        return Response(ExtendedJobDescription(process).data) 
 
     def saveResume(self, request):
         fileUploaded = request.FILES['resume']

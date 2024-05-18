@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from processHandler.models import JobDescription, Process, Resume
 from processHandler.serializer import JobDescriptionSerializer, ResumeSerializer
+from reportExtractor.models import ScoreConfig
+from reportExtractor.serializer import ScoreConfigSerializer
 from root.analyse import getEducation, getExperience, getExtendedReport, getKeywords, getProfile
 from root.models import BaseRs, UploadRq
 
@@ -15,6 +17,15 @@ class BaseRsSerializer(serializers.ModelSerializer):
         model = BaseRs
         fields = ('status', 'message')
 
+
+class ExtendedJobDescription(serializers.ModelSerializer):
+    config = serializers.SerializerMethodField()
+    class Meta:
+        model = JobDescription
+        fields = ('reqId', 'userId', 'jdText', 'jdTitle','uploadedDateTime', 'config')
+
+    def get_config(self, obj):
+        return ScoreConfigSerializer(ScoreConfig.objects.get(jobId = obj.reqId)).data               
 
 
 class ExtendedReportSerializer(serializers.ModelSerializer):
